@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<AuthBloc>(context).add(Login(
+                  context.read<AuthBloc>().add(Login(
                       email: emailTextController.text,
                       password: passwordTextController.text));
                 },

@@ -12,11 +12,12 @@ class AuthRepository {
   Future loginServices(String email, String password) async {
     var uri = Uri.parse('$baseUrl/api/login');
     try {
-      var response = await http.post(uri,
-          body: jsonEncode({
-            "email": email,
-            "password": password,
-          }));
+      var response = await client.post(uri,
+          headers: {"Content-Type": "application/json"},
+          body: json.encode(jsonEncode({
+            "email": "eve.holt@reqres.in",
+            "password": "cityslicka",
+          })));
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
