@@ -13,11 +13,11 @@ class AuthRepository {
     var uri = Uri.parse('$baseUrl/api/login');
     try {
       var response = await client.post(uri,
-          headers: {"Content-Type": "application/json"},
-          body: json.encode(jsonEncode({
-            "email": "eve.holt@reqres.in",
-            "password": "cityslicka",
-          })));
+          headers: {"content-type": "application/json"},
+          body: json.encode({
+            "email": email,
+            "password": password,
+          }));
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
