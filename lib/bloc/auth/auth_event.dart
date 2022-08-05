@@ -12,5 +12,7 @@ class Login extends AuthEvent {
   });
 }
 
+class Logout extends AuthEvent {}
+
 // Cek the user has already login or not
 class IsHasLogin extends AuthEvent {}

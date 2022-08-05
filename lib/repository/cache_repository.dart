@@ -13,7 +13,7 @@ class Cache {
     await box.write(key, value);
   }
 
-  static Future<dynamic> getData(String key) async {
+  static Future getData(String key) async {
     final result = await box.read(key);
     return result;
   }

@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             if (state is Authenticated) {
               return const HomePage();
+            } else if (state is AuthenticatedEror) {
+              print("there is eror to get data form chace [main.dart]");
             } else if (state is AuthenticatedLoading) {
               return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
               );
-            } else if (state is AuthenticatedEror) {
-              print("there is eror at get data form chace [main.dart]");
             }
             return const LoginPage();
           },

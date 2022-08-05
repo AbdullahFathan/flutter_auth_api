@@ -21,7 +21,9 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        await Cache.writeData(key: 'token_user', value: data['token']);
+
+        await Cache.writeData(key: 'user_token', value: data['token']);
+        await Cache.writeData(key: 'user_email', value: email);
         print("Login success [auth_repository.dart]");
 
         return true;
@@ -36,5 +38,9 @@ class AuthRepository {
       print("Eror at LoginServices [auth_repository.dart]: ${eror.toString()}");
     }
     return false;
+  }
+
+  Future logoutServices() async {
+    await Cache.deleteData('user_data');
   }
 }

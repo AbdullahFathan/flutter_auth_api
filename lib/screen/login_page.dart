@@ -15,21 +15,19 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
 
-  /*
   @override
   void dispose() {
     emailTextController.dispose();
     passwordTextController.dispose();
     super.dispose();
   }
-  */
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const HomePage()));
         } else if (state is AuthEror) {
           Utility().showSnackBar(context, state.text);

@@ -11,7 +11,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<IsHasLogin>(
       (event, emit) async {
         try {
-          var response = await Cache.getData('token_user');
+          var response = await Cache.getData('user_token');
+
           if (response != null) {
             emit(Authenticated());
           } else {
@@ -28,12 +29,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         var response =
             await AuthRepository().loginServices(event.email, event.password);
+
+        // if response == true, so loginServices has succes
         response ? emit(AuthSuccess()) : emit(AuthEror("Cannot Login"));
+
         print("Login response has send [auth_bloc.dart]");
       } catch (eror) {
         emit(AuthEror(eror.toString()));
         print("Login has failed [auth_bloc.dart]");
       }
     });
+
+    on<Logout>(
+      (event, emit) async {
+        emit(AuthenticatedLoading());
+        await AuthRepository().logoutServices();
+        emit(Unauthenticated());
+      },
+    );
   }
 }
