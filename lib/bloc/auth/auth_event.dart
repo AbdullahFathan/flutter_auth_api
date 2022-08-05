@@ -16,3 +16,12 @@ class Logout extends AuthEvent {}
 
 // Cek the user has already login or not
 class IsHasLogin extends AuthEvent {}
+
+class Register extends AuthEvent {
+  final String email;
+  final String password;
+  Register({
+    required this.email,
+    required this.password,
+  });
+}

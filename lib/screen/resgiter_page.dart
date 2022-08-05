@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:login_api/bloc/auth/auth_bloc.dart';
-import 'package:login_api/screen/home_page.dart';
-import 'package:login_api/screen/resgiter_page.dart';
-import 'package:login_api/widget/utility.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../bloc/auth/auth_bloc.dart';
+import '../widget/utility.dart';
+import 'home_page.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailTextController = TextEditingController();
   final TextEditingController _passwordTextController = TextEditingController();
 
@@ -27,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
+        if (state is RegisterSuccess) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const HomePage()));
         } else if (state is AuthEror) {
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
         }
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Login Page"),
+            title: const Text("Register Page"),
           ),
           body: Column(
             children: [
@@ -64,33 +64,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  context.read<AuthBloc>().add(Login(
+                  context.read<AuthBloc>().add(Register(
                       email: _emailTextController.text,
                       password: _passwordTextController.text));
                 },
                 child: const Text(
-                  "Login",
+                  "Register",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const RegisterPage())),
-                child: const Text(
-                  "Dont have account ??  Make your Acount",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green,
-                  ),
-                ),
-              )
             ],
           ),
         );
