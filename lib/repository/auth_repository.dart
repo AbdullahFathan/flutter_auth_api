@@ -23,8 +23,11 @@ class AuthRepository {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
 
-        await Cache.writeData(key: 'user_token', value: data['token']);
-        await Cache.writeData(key: 'user_email', value: email);
+        await Cache.writeData(key: 'user_data', value: {
+          'token': data['token'],
+          'email': email,
+        });
+
         print("Login success [auth_repository.dart]");
 
         return true;
@@ -58,17 +61,19 @@ class AuthRepository {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
 
-        await Cache.writeData(key: 'user_token', value: data['token']);
-        await Cache.writeData(key: 'user_email', value: email);
+        await Cache.writeData(key: 'user_data', value: {
+          'token': data['token'],
+          'email': email,
+        });
 
         print('Register success [auth_repository.dart]');
         return RegisterModel(id: data['id'], token: data['token']);
       } else {
-        var data = jsonDecode(response.body);
+        var erorData = jsonDecode(response.body);
 
         print(
             "Register Invalid  and status code = ${response.statusCode} [auth_repository.dart]");
-        print(" form server =  ${data['error']}  ##[auth_repository.dart]");
+        print(" form server =  ${erorData['error']}  ##[auth_repository.dart]");
       }
     } catch (eror) {
       print(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:login_api/repository/cache_repository.dart';
 import 'package:login_api/screen/login_page.dart';
 
 import '../bloc/auth/auth_bloc.dart';
@@ -12,8 +13,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var tokenUser = '111111';
-  var emailUser = '112@gmail.com';
+  var tokenUser = '';
+  var emailUser = '';
+
+  getDataCache() async {
+    await Cache.getData('user_data').then((value) {
+      setState(() {
+        tokenUser = value['token'];
+        emailUser = value['email'];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getDataCache();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
