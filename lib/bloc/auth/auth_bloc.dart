@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:login_api/models/register.dart';
 import 'package:login_api/repository/auth_repository.dart';
 import 'package:login_api/repository/cache_repository.dart';
 import 'package:meta/meta.dart';
@@ -14,11 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         try {
           var response = await Cache.getData('user_token');
 
-          if (response != null) {
-            emit(Authenticated());
-          } else {
-            emit(Unauthenticated());
-          }
+          response != null ? emit(Authenticated()) : emit(Unauthenticated());
         } catch (eror) {
           emit(AuthenticatedEror());
         }
@@ -55,11 +50,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         try {
           var response = await AuthRepository()
               .registerServices(event.email, event.password);
-          if (response != null) {
-            emit(RegisterSuccess(response));
-          } else {
-            emit(AuthEror("cannot resgitser"));
-          }
+
+          response != null
+              ? emit(AuthSuccess())
+              : emit(AuthEror("cannot resgitser"));
+
           print("Register response has send [auth_bloc.dart]");
         } catch (eror) {
           emit(AuthEror(eror.toString()));

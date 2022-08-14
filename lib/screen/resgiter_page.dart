@@ -27,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is RegisterSuccess) {
+        if (state is AuthSuccess) {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => const HomePage()));
         } else if (state is AuthEror) {

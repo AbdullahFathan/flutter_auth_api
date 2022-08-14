@@ -21,10 +21,3 @@ class Unauthenticated extends AuthState {}
 class AuthenticatedEror extends AuthState {}
 
 class AuthenticatedLoading extends AuthState {}
-
-class RegisterSuccess extends AuthState {
-  RegisterModel post;
-  RegisterSuccess(
-    this.post,
-  );
-}
